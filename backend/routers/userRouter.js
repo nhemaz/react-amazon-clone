@@ -8,7 +8,7 @@ import { generateToken } from '../utils.js';
 const userRouter = express.Router();
 
 userRouter.get('/seed', expressAsyncHandler(async (req, res) => {
-    // await User.remove({});
+    await User.remove({});
     const createdUsers = await User.insertMany(data.users);
     res.send({ createdUsers });
 
@@ -19,7 +19,7 @@ userRouter.get('/seed', expressAsyncHandler(async (req, res) => {
 userRouter.post('/signin', expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
     if (user) {
-        if (bcrypt.compareSync(re.body.password, user.password)) {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
             res.send({
                 _id: user._id,
                 name: user.name,
