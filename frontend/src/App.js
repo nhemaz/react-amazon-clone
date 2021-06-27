@@ -5,6 +5,7 @@ import { signout } from './actions/userActions';
 import cartScreen from './screens/cartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -27,7 +28,7 @@ function App() {
         <header className="row">
           <div>
             <Link className="brand" to="/">
-              amazona
+              Fiege
             </Link>
           </div>
           <div>
@@ -43,6 +44,11 @@ function App() {
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                 </Link>
                 <ul className="dropdown-content">
+                  <li>
+                    <Link to="/orderhistory">
+                      My Orders
+                    </Link>
+                  </li>
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
                       Sign Out
@@ -64,6 +70,7 @@ function App() {
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
+          <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">All right reserved</footer>
