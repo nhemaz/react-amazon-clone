@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "build": "cd frontend && npm install && npm run build",
     "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
   },
   "dependencies": {
@@ -14,5 +15,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
-  }
+  },
+  "engines": {"node": "16.3.0", "npm":"7.17.0" }
 }
