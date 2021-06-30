@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
-    "start": "nodemon --watch root --exec node --experimental-modules server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
