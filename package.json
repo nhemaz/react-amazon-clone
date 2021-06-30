@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
+    "start": "nodemon --watch root --exec node --experimental-modules server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
