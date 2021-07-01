@@ -9,6 +9,13 @@ const data = {
       password: bcrypt.hashSync('2401', 8),
       isAdmin: true,
       isSeller: true,
+      seller: {
+        name: 'Fiege',
+        logo: '/images/logo1.png',
+        description: 'best seller',
+        rating: 5,
+        numReviews: 10,
+      }
     },
     {
       name: 'John',
@@ -16,6 +23,10 @@ const data = {
       password: bcrypt.hashSync('2401', 8),
       isAdmin: false,
       isSeller: false,
+      seller: {
+        rating: 0,
+        numReviews: 0,
+      }
     },
   ],
 
