@@ -106,8 +106,9 @@ button.primary {
 button.block {
     width: 100%;
 }
+
 button.small {
-font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 /* Header */
@@ -146,6 +147,10 @@ a.brand {
     align-items: flex-start;
 }
 
+.row.start {
+    justify-content: flex-start;
+}
+
 .col-1 {
     flex: 1 1 25rem;
 }
@@ -154,8 +159,16 @@ a.brand {
     flex: 2 1 50rem;
 }
 
+.col-3 {
+    flex: 3 1 75rem;
+}
+
 .min-30 {
     min-width: 30rem;
+}
+
+.p-1 {
+    padding: 1rem;
 }
 
 /* Image */
@@ -164,18 +177,17 @@ img {
 }
 
 img.small {
-    max-width: 5rem ;
-    width: 100% ;
+    max-width: 5rem;
+    width: 100%;
 }
 
 img.medium {
-    height: 200px;
-    max-width: 29rem ;
-    width: 100% ;
+    max-width: 29rem;
+    width: 100%;
 }
 
 img.large {
-    width: 100% ;
+    width: 100%;
 }
 
 /* Card */
@@ -297,17 +309,21 @@ img.large {
 
 /* Table */
 .table {
-width: 100%;
-border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
+
 .table tbody tr:nth-of-type(odd) {
-background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
-.table td, .table th {
-text-align: left;
-border: 0.1rem solid #e4e4e4;
-padding: 0.5rem;
+
+.table td,
+.table th {
+    text-align: left;
+    border: 0.1rem solid #e4e4e4;
+    padding: 0.5rem;
 }
+
 .table button {
-margin: 0 0.2rem;
+    margin: 0 0.2rem;
 }
