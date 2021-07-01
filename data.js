@@ -8,25 +8,12 @@ const data = {
       email: 'admin@example.com',
       password: bcrypt.hashSync('2401', 8),
       isAdmin: true,
-      isSeller: true,
-      seller: {
-        name: 'Fiege',
-        logo: '/images/logo1.png',
-        description: 'best seller',
-        rating: 5,
-        numReviews: 10,
-      }
     },
     {
       name: 'John',
       email: 'customer@example.com',
       password: bcrypt.hashSync('2401', 8),
       isAdmin: false,
-      isSeller: false,
-      seller: {
-        rating: 0,
-        numReviews: 0,
-      }
     },
   ],
 
@@ -34,7 +21,6 @@ const data = {
     {
 
       name: 'Nike Slim Shirt',
-      seller: "60ddee2d6e671500044101ce",
       category: 'Shirts',
       image: '/images/xbox.jpg',
       price: 120,
@@ -47,7 +33,6 @@ const data = {
     {
 
       name: 'Adidas Fit Shirt',
-      seller: "60ddee2d6e671500044101ce",
       category: 'Shirts',
       image: '/images/xbox.jpg',
       price: 100,
@@ -60,7 +45,6 @@ const data = {
     {
 
       name: 'Lacoste Free Shirt',
-      seller: "60ddee2d6e671500044101ce",
       category: 'Shirts',
       image: '/images/xbox.jpg',
       price: 220,
@@ -73,7 +57,6 @@ const data = {
     {
 
       name: 'Nike Slim Pant',
-      seller: "60ddee2d6e671500044101ce",
       category: 'Pants',
       image: '/images/xbox.jpg',
       price: 78,
@@ -85,7 +68,6 @@ const data = {
     },
     {
       name: 'Puma Slim Pant',
-      seller: "60ddee2d6e671500044101ce",
       category: 'Pants',
       image: '/images/xbox.jpg',
       price: 65,
@@ -97,7 +79,6 @@ const data = {
     },
     {
       name: 'Adidas Fit Pant',
-      seller: "60ddee2d6e671500044101ce",
       category: 'Pants',
       image: '/images/xbox.jpg',
       price: 139,

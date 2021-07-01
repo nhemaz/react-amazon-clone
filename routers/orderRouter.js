@@ -1,106 +1,105 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import Order from '../models/OrderModel.js';
-import { isAuth, isAdmin, isSellerOrAdmin } from '../utils.js';
+import data from '../data.js';
+import Product from '../models/productModel.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
-const orderRouter = express.Router();
-orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+const productRouter = express.Router();
+
+productRouter.get(
+  '/',
+  expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller || '';
     const sellerFilter = seller ? { seller } : {};
-
-    const orders = await Order.find({ ...sellerFilter }).populate(
-      'user',
-      'name'
+    const products = await Product.find({ ...sellerFilter }).populate(
+      'seller',
+      'seller.name seller.logo'
     );
-    res.send(orders);
+    res.send(products);
   })
 );
 
-orderRouter.get('/mine', isAuth, expressAsyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id });
-  res.send(orders);
-}))
+productRouter.get(
+  '/seed',
+  expressAsyncHandler(async (req, res) => {
+    // await Product.remove({});
+    const createdProducts = await Product.insertMany(data.products);
+    res.send({ createdProducts });
+  })
+);
 
-orderRouter.post(
+productRouter.get(
+  '/:id',
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id).populate(
+      'seller',
+      'seller.name seller.logo seller.rating seller.numReviews'
+    );
+    if (product) {
+      res.send(product);
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
+);
+
+productRouter.post(
   '/',
   isAuth,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    if (req.body.orderItems.length === 0) {
-      res.status(400).send({ message: 'Cart is empty' });
-    } else {
-      const order = new Order({
-        seller: req.body.orderItems[0].seller,
-        orderItems: req.body.orderItems,
-        shippingAddress: req.body.shippingAddress,
-        paymentMethod: req.body.paymentMethod,
-        itemsPrice: req.body.itemsPrice,
-        shippingPrice: req.body.shippingPrice,
-        taxPrice: req.body.taxPrice,
-        totalPrice: req.body.totalPrice,
-        user: req.user._id,
-      });
-      const createdOrder = await order.save();
-      res
-        .status(201)
-        .send({ message: 'New Order Created', order: createdOrder });
-    }
+    const product = new Product({
+      name: 'sample name ' + Date.now(),
+      seller: req.user._id,
+      image: '/images/p1.jpg',
+      price: 0,
+      category: 'sample category',
+      brand: 'sample brand',
+      countInStock: 0,
+      rating: 0,
+      numReviews: 0,
+      description: 'sample description',
+    });
+    const createdProduct = await product.save();
+    res.send({ message: 'Product Created', product: createdProduct });
   })
 );
-
-orderRouter.get(
+productRouter.put(
   '/:id',
   isAuth,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
-    if (order) {
-      res.send(order);
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (product) {
+      product.name = req.body.name;
+      product.price = req.body.price;
+      product.image = req.body.image;
+      product.category = req.body.category;
+      product.brand = req.body.brand;
+      product.countInStock = req.body.countInStock;
+      product.description = req.body.description;
+      const updatedProduct = await product.save();
+      res.send({ message: 'Product Updated', product: updatedProduct });
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: 'Product Not Found' });
     }
   })
 );
 
-orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
-  if (order) {
-    order.isPaid = true;
-    order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.params.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.email_address,
-    };
-    const updatedOrder = await order.save();
-    res.send({ message: 'Order Paid', order: updatedOrder });
-  } else {
-    res.status(404).send({ message: 'Order Not Found' });
-  }
-})
+productRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      const deleteProduct = await product.remove();
+      res.send({ message: 'Product Deleted', product: deleteProduct });
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
 );
 
-orderRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
-  if (order) {
-    const deleteOrder = await order.remove();
-    res.send({ message: 'OrderDeleted', order: deleteOrder });
-  } else {
-    res.status(404).send({ message: 'Order Not Found' });
-  }
-}));
-
-orderRouter.put('/:id/deliver', isAuth, expressAsyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
-  if (order) {
-    order.isDelivered = true;
-    order.deliveredAt = Date.now();
-
-    const updatedOrder = await order.save();
-    res.send({ message: 'Order Fulfiiled', order: updatedOrder });
-  } else {
-    res.status(404).send({ message: 'Order Not Found' });
-  }
-})
-);
-
-export default orderRouter;
+export default productRouter;
