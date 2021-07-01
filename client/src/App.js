@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
+import MerchantRoute from './components/MerchantRoute';
 import PrivateRoute from './components/PrivateRoute';
 import cartScreen from './screens/cartScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -19,6 +20,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
+import UserEditScreen from './screens/UserEditScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -71,6 +73,24 @@ function App() {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
+            {userInfo && userInfo.isSeller && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Merchant<i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard/seller">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
                 <Link to="#admin">
@@ -110,16 +130,28 @@ function App() {
           ></PrivateRoute>
           <AdminRoute
             path="/productlist"
-            component={ProductListScreen}
+            component={ProductListScreen} exact
           ></AdminRoute>
            <AdminRoute
             path="/orderlist"
-            component={OrderListScreen}
+            component={OrderListScreen} exact
           ></AdminRoute>
           <AdminRoute
             path="/userlist"
             component={UserListScreen}
           ></AdminRoute>
+          <AdminRoute
+            path="/user/:id/edit"
+            component={UserEditScreen}
+          ></AdminRoute>
+          <MerchantRoute
+            path="/productlist/seller"
+            component={ProductListScreen}
+          ></MerchantRoute>
+          <MerchantRoute
+            path="/orderlist/seller"
+            component={OrderListScreen}
+          ></MerchantRoute>
           <Route
             path="/product/:id/edit"
             component={ProductEditScreen}
@@ -127,7 +159,7 @@ function App() {
           ></Route>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
-        <footer className="row center">All right reserved</footer>
+        <footer className="row center">All Rights Reserved</footer>
       </div>
     </BrowserRouter>
   );

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { ORDER_DELIVER_RESET, ORDER_PAY_RESET, ORDER_PAY_SUCCESS } from '../constants/orderConstants';
+import { ORDER_DELIVER_RESET, ORDER_PAY_RESET} from '../constants/orderConstants';
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id;
@@ -35,9 +35,8 @@ export default function OrderScreen(props) {
       document.body.appendChild(script);
     };
     if (!order || successPay || successDeliver || (order && order._id !== orderId)) {
-      dispatch({ type: ORDER_PAY_RESET })
-      dispatch({type: ORDER_DELIVER_RESET})
-
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -183,6 +182,8 @@ export default function OrderScreen(props) {
                   )}
                   {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                     <li>
+                      {loadingDeliver && <LoadingBox></LoadingBox>}
+                      {errorDeliver && (<MessageBox variant="danger">{ errorDeliver}</MessageBox>)}
                        <button type="button" onClick={deliverHandler} class="primary block">Order Fulfilled</button>
                     </li>
                   )}

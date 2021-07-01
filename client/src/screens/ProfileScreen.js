@@ -10,6 +10,10 @@ export default function ProfileScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [sellerName, setSellerName] = useState('');
+    const [sellerLogo, setSellerLogo] = useState('');
+    const [sellerDescription, setSellerDescription] = useState('');
+
 
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
@@ -25,6 +29,11 @@ export default function ProfileScreen() {
         } else {
             setName(user.name);
             setEmail(user.email);
+            if (user.seller) {
+                setSellerName(user.seller.name);
+                setSellerLogo(user.seller.logo);
+                setSellerDescription(user.seller.description)
+            }
         }
 
     }, [dispatch, userInfo._id, user])
@@ -34,10 +43,19 @@ export default function ProfileScreen() {
         if (password !== confirmPassword) {
            alert('Passwords do not match!')
         }else {
-          dispatch(updatedUserProfile({userId: user._id, name, email, password}));
-
-        }
-    };
+            dispatch(
+        updatedUserProfile({
+          userId: user._id,
+          name,
+          email,
+          password,
+          sellerName,
+          sellerLogo,
+          sellerDescription,
+        })
+      );
+    }
+  };
   return (
     <div>
           <form className="form" onSubmit={submitHandler}>
@@ -92,6 +110,29 @@ export default function ProfileScreen() {
 
                                   ></input>
                               </div>
+                              {
+                                  user.isSeller && (
+                                      <>
+                                          <h2>Merchant</h2>
+                                          <div>
+                                              <label htmlFor="sellerName">Merchant Name</label>
+                                              <input id="sellerName" type="text" placeholder="Enter Merchant Name"
+                                                  value={sellerName} onChange={(e) => setSellerName(e.target.value)}></input>
+                                          </div>
+                                          <div>
+                                              <label htmlFor="sellerLogo">Merchant Logo</label>
+                                              <input id="sellerLogo" type="type" placeholder="Logo"
+                                                  value={sellerLogo} onChange={(e) => setSellerLogo(e.target.value)}></input>
+                                          </div>
+                                           <div>
+                                              <label htmlFor="sellerDescription">Tell your customers a bit about your brand...</label>
+                                              <input id="sellerDescription" type="text" placeholder="Enter Merchant Name"
+                                                  value={sellerDescription} onChange={(e) => setSellerDescription(e.target.value)}></input>
+                                          </div>
+
+                                      </>
+                                    )
+                              }
                               <div>
                                   <label />
                                   <button className="primary" type="submit">Update</button>
