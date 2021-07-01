@@ -34,6 +34,7 @@ const data = {
     {
 
       name: 'Nike Slim Shirt',
+      seller: "60ddee2d6e671500044101ce",
       category: 'Shirts',
       image: '/images/xbox.jpg',
       price: 120,
@@ -46,6 +47,7 @@ const data = {
     {
 
       name: 'Adidas Fit Shirt',
+      seller: "60ddee2d6e671500044101ce",
       category: 'Shirts',
       image: '/images/xbox.jpg',
       price: 100,
@@ -58,6 +60,7 @@ const data = {
     {
 
       name: 'Lacoste Free Shirt',
+      seller: "60ddee2d6e671500044101ce",
       category: 'Shirts',
       image: '/images/xbox.jpg',
       price: 220,
@@ -70,6 +73,7 @@ const data = {
     {
 
       name: 'Nike Slim Pant',
+      seller: "60ddee2d6e671500044101ce",
       category: 'Pants',
       image: '/images/xbox.jpg',
       price: 78,
@@ -81,6 +85,7 @@ const data = {
     },
     {
       name: 'Puma Slim Pant',
+      seller: "60ddee2d6e671500044101ce",
       category: 'Pants',
       image: '/images/xbox.jpg',
       price: 65,
@@ -92,6 +97,7 @@ const data = {
     },
     {
       name: 'Adidas Fit Pant',
+      seller: "60ddee2d6e671500044101ce",
       category: 'Pants',
       image: '/images/xbox.jpg',
       price: 139,
