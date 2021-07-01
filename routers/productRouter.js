@@ -19,7 +19,7 @@ productRouter.get(
 productRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
-    // await Product.remove({});
+    await Product.remove({});
     const createdProducts = await Product.insertMany(data.products);
     res.send({ createdProducts });
   })
