@@ -4,7 +4,7 @@ import { USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST,
     USER_REGISTER_FAIL, USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS, USER_DETAILS_FAIL,
     USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS,
-    USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_RESET, USER_LIST_REQUEST, USER_LIST_FAIL, USER_LIST_SUCCESS, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DELETE_RESET, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_RESET } from "../constants/userConstants";
+    USER_UPDATE_PROFILE_FAIL, USER_UPDATE_PROFILE_RESET, USER_LIST_REQUEST, USER_LIST_FAIL, USER_LIST_SUCCESS, USER_DELETE_REQUEST, USER_DELETE_SUCCESS, USER_DELETE_FAIL, USER_DELETE_RESET, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_UPDATE_RESET, USER_ADDRESS_MAP_CONFIRM } from "../constants/userConstants";
 
 export const userSigninReducer = (state = {}, action) => {
     switch (action.type) {
@@ -103,4 +103,13 @@ export const userDeleteReducer = (state = {}, action) => {
     default:
       return state;
   }
+};
+
+export const userAddressMapReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_ADDRESS_MAP_CONFIRM:
+            return { address: action.payload };
+        default:
+            return state;
+    }
 };
