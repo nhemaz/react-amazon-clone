@@ -1,4 +1,4 @@
-# fiege-marketplace
+# Amazon Clone
 
 ## Run Locally
  Clone repo
